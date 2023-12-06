@@ -241,3 +241,141 @@ The vegetables are:''')
                     print("Don't step on the Snake!")
         else:
             print("You can't move that way!")
+
+    def moveCptHorizontal(self, move):
+        """
+        Function to move the captain horizontal in an empty slot
+        :param move: variable representing the horizontal movement of captain
+        """
+        x, y = self._captain.getXY()
+        max_col = len(self._field_matrix[0])
+
+        new_col = 0
+
+        if move == "A" or move == "a":
+            new_col = max(y - 1, 0)
+        elif move == "d" or move == "D":
+            new_col = min(y + 1, max_col - 1)
+        if y != new_col:
+            if self._field_matrix[x][new_col] is None:
+                self._captain.setXY(x, new_col)
+                self._field_matrix[x][y] = None
+                self._field_matrix[x][new_col] = self._captain
+            elif self._field_matrix[x][new_col].getsymbol() != "R" and self._field_matrix[x][new_col].getsymbol() != "S":
+                self._captain.setXY(x, new_col)
+                self._field_matrix[x][y] = None
+                self._score += self._field_matrix[x][new_col].getPoints()
+                print(f'Yummy! A delicious {self._field_matrix[x][new_col].getName()}')
+                self._captain.addVeggie(self._field_matrix[x][new_col])
+                self._field_matrix[x][new_col] = self._captain
+            else:
+                if self._field_matrix[x][new_col].getsymbol() == "R":
+                    print("Don't step on the bunnies!")
+                else:
+                    print("Don't step on the Snake!")
+        else:
+            print("You can't move that way!")
+
+    def moveCaptain(self):
+        """
+        Function to get user input in which direction Captain object should move
+        """
+        move = input("Would you like to move up(W), down(S), left(A), or right(D):")
+
+        if move in ["W", "w", "S", "s"]:
+            self.moveCptVertical(move)
+        elif move in ["A", "a", "D", "d"]:
+            self.moveCptHorizontal(move)
+        else:
+            print(f"{move} is not a valid option.")
+
+    def moveSnake(self):
+        """
+        Function to move snake object in random direction
+        """
+        captain_x, captain_y = self._captain.getXY()
+        snake_x, snake_y = self._snake.getXY()
+        move = random.randint(0, 1)
+
+        new_snake_x = 0
+        new_snake_y = 0
+
+        # Condition that the snakes always tries to move towards the captain
+        if move == 0:
+            if captain_x > snake_x:
+                new_snake_x = snake_x + 1
+                new_snake_y = snake_y
+            elif captain_x < snake_x:
+                new_snake_x = snake_x - 1
+                new_snake_y = snake_y
+            else:
+                move = 1
+
+        if move == 1:
+            if captain_y > snake_y:
+                new_snake_y = snake_y + 1
+                new_snake_x = snake_y
+            else:
+                new_snake_y = snake_y - 1
+                new_snake_x = snake_y
+
+        if new_snake_x == captain_x and new_snake_y == captain_y:
+            for i in range(min(len(self._captain._veggies), 5)):
+                v = self._captain._veggies.pop()
+                if v is not None:
+                    self._score -= v.getPoints()
+            self._field_matrix[snake_x][snake_y] = None
+            print("Snake Bite! You Lost 5 Veggies")
+            self.initSnake()
+        elif self._field_matrix[new_snake_x][new_snake_y] is None:
+            self._field_matrix[snake_x][snake_y] = None
+            self._snake.setXY(new_snake_x, new_snake_y)
+            self._field_matrix[new_snake_x][new_snake_y] = self._snake
+
+    def gameOver(self):
+        """
+        Function to print the score and print that the game is completed
+        """
+        print("GAME OVER!")
+        print("You managed to harvest the following vegetables:")
+        for i in self._captain.getVeggie():
+            print(i.getName())
+        print(f'Your score was: {self._score}')
+
+    def highScore(self):
+        """
+        Function to get the users high score and store it in this highscore.data file and display high scores to users
+        """
+        high_scores = []
+
+        if os.path.exists(self.__HIGSCOREFILE):
+            with open(self.__HIGSCOREFILE, 'rb') as file:
+                high_scores = pickle.load(file)
+
+        # Getting user input for player initials
+
+        player_initials = input("Please enter your three initials to go on the scoreboard: ")[:3]
+        player = (player_initials, self._score)
+
+        # Checking for high_scores and appending it to high_score tuple
+        if not high_scores:
+            high_scores.append(player)
+        else:
+            index = 0
+            while index < len(high_scores) and self._score <= high_scores[index][1]:
+                index += 1
+            high_scores.insert(index, player)
+
+        # Displaying the high scores to user and storing it in the file.
+
+        print("HIGH SCORES")
+        # print("Name    Score")
+        print("{:<8}{}".format("Name", "Score"))
+
+        for initial, score in high_scores:
+            # print(f"{initial}     {score}")
+            print("{:<8}{}".format(initial, score))
+
+        with open(self.__HIGSCOREFILE, 'wb') as file:
+            pickle.dump(high_scores, file)
+
