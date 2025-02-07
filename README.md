@@ -24,4 +24,8 @@ The game is structured using **object-oriented programming (OOP)** principles wi
 ### 🕹️ **Game Logic**
 - **GameEngine**: Handles game setup, player and rabbit movements, field updates, scoring, and game over conditions.
 
-## 📂 Files & Code Structure
+### 🎯 How to Play
+
+**🏁 Start the Game**
+Run the game using Python
+python main.py
