@@ -83,11 +83,8 @@ The game is structured using **object-oriented programming (OOP)** principles wi
    git clone https://github.com/your-username/Captain-Veggie.git
    cd Captain-Veggie
    ```
-2. **Install dependencies** (if any):
-   ```bash
-   pip install -r requirements.txt
    ```
-3. **Run the game**:
+2. **Run the game**:
    ```bash
    python main.py
    ```
