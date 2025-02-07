@@ -24,8 +24,72 @@ The game is structured using **object-oriented programming (OOP)** principles wi
 ### 🕹️ **Game Logic**
 - **GameEngine**: Handles game setup, player and rabbit movements, field updates, scoring, and game over conditions.
 
-### 🎯 How to Play
+## 📂 Files & Code Structure
+```
+📂 Captain-Veggie-Game
+│── 📄 README.md           # This file
+│── 📄 FieldInhabitant.py  # Base class for all field objects
+│── 📄 Veggie.py           # Vegetable class
+│── 📄 Creature.py         # Base class for moving entities
+│── 📄 Captain.py          # Captain Veggie (player)
+│── 📄 Rabbit.py           # Rabbits (AI enemies)
+│── 📄 GameEngine.py       # Core game logic
+│── 📄 main.py             # Runs the game
+│── 📄 highscore.data      # Stores high scores
+│── 📄 veggie.txt          # Stores vegetable data
+```
 
-**🏁 Start the Game**
-Run the game using Python
-python main.py
+
+## 🎯 How to Play
+
+### 🏁 **Start the Game**
+1. **Run the game using Python**
+   ```bash
+   python main.py
+   ```
+
+2. **Move Captain Veggie using the following keys:**
+   - `W` - Move **Up**
+   - `A` - Move **Left**
+   - `S` - Move **Down**
+   - `D` - Move **Right**
+
+3. **Game Objectives**
+   - Move around the field to **collect vegetables**.
+   - Avoid stepping on **rabbits**.
+   - Harvest as many vegetables as possible before they are all gone.
+
+4. **Game Over**
+   - The game ends when all vegetables are collected.
+   - The final **score** and list of collected vegetables will be displayed.
+
+---
+## 📊 Scoring System
+- Each vegetable has a **different point value**.
+- The more vegetables you collect, the **higher your score**.
+- The **final score** is displayed at the end.
+
+---
+
+## 🏆 High Score Tracking
+- After the game ends, **enter your initials** to save your score.
+- The game will store and display the **top high scores**.
+
+---
+
+## 🛠️ Installation & Setup
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/your-username/Captain-Veggie.git
+   cd Captain-Veggie
+   ```
+2. **Install dependencies** (if any):
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. **Run the game**:
+   ```bash
+   python main.py
+   ```
+
+---
